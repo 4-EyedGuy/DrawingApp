@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Drawing App with p5.js</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+    .controls {
+      margin-bottom: 10px;
+    }
+    .controls button {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Online Drawing App with p5.js</h1>
+  <div class="controls">
+    <button onclick="tool = 'pencil'">Pencil</button>
+    <button onclick="tool = 'thickPencil'">Thick Pencil</button>
+    <button onclick="tool = 'eraser'">Eraser</button>
+    <button style="background: red;" onclick="strokeColor = 'red'"></button>
+    <button style="background: blue;" onclick="strokeColor = 'blue'"></button>
+    <button style="background: green;" onclick="strokeColor = 'green'"></button>
+    <button style="background: yellow;" onclick="strokeColor = 'yellow'"></button>
+    <button style="background: black; color: white;" onclick="strokeColor = 'black'"></button>
+  </div>
+  <script>
+    let tool = 'pencil';
+    let strokeColor = 'black';
+    let drawing = false;
+    let prevX, prevY;
+
+    function setup() {
+      let canvas = createCanvas(800, 600);
+      canvas.parent(document.body);
+      background(255);
+    }
+
+    function mousePressed() {
+      drawing = true;
+      prevX = mouseX;
+      prevY = mouseY;
+    }
+
+    function mouseDragged() {
+      if (!drawing) return;
+
+      if (tool === 'eraser') {
+        stroke(255);
+        strokeWeight(20);
+        }
+        else {
+        stroke(strokeColor);
+        if (tool === 'pencil') {
+            strokeWeight(2);
+        }
+            else if (tool === 'thickPencil') {
+            strokeWeight(8);
+        }
+      }
+      line(prevX, prevY, mouseX, mouseY);
+      prevX = mouseX;
+      prevY = mouseY;
+    }
+
+    function mouseReleased() {
+      drawing = false;
+    }
+  </script>
+</body>
+</html>
